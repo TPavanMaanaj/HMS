@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smartz Hotels - Luxury Redefined</title>
+    <style>
+    #map {
+            width: 100%;
+            height: 200px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Playfair Display', serif;
+            overflow-x: hidden;
+            color: #fff;
+            height: 100vh;
+        }
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: url('https://3.imimg.com/data3/JV/KJ/MY-15827078/hotels-booking.jpg') no-repeat center center/cover;
+            z-index: -1;
+        }
+        .intro-section {
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.6);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            font-size: 3rem;
+            font-weight: bold;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7);
+            animation: fadeOut 6s ease-in-out forwards;
+            position: relative;
+        }
+        @keyframes fadeOut {
+            0% { opacity: 1; }
+            100% { opacity: 0; visibility: hidden; }
+        }
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 10px ;
+            background: transparent;
+            transition: background 0.5s ease, box-shadow 0.5s ease;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+        }
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            font-size: 20px;
+            font-weight: bold;
+            margin: 0 20px;
+            transition: color 0.3s ease;
+        }
+        .navbar.scrolled {
+            background: rgba(0, 0, 0, 0.85);
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.5);
+        }
+        .content {
+            padding: 150px 50px;
+            height: 80vh;
+            background-color: #111;
+            color: #ddd;
+            font-size: 1.2rem;
+            text-align: center;
+        }
+        .content h1 {
+            font-size: 3rem;
+            color: #C2934C;
+            margin-bottom: 20px;
+        }
+        .content p {
+            max-width: 800px;
+            margin: auto;
+            line-height: 1.8;
+        }
+        .booking-section {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+            display: inline-block;
+            margin-top: 20px;
+        }
+        .booking-section input, .booking-section button {
+            padding: 10px;
+            margin: 5px;
+            border: none;
+            border-radius: 5px;
+        }
+        .booking-section button {
+            background: #C2934C;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="background"></div>
+    <div class="intro-section">Welcome to Smartz Hotels</div>
+    
+    <nav class="navbar" id="navbar">
+        <a href="loginjfs.jsp">Destinations</a>
+        <a href="loginjfs.jsp">Rooms</a>
+        <a href="loginjfs.jsp">Dining</a>
+        <a href="emplogin.jsp">Employee Login</a>
+        <a href="#footer">Contact Us </a>
+    </nav>
+    
+    <div class="content">
+        <h1>Experience Luxury at its Finest</h1>
+        <p>Step into a world of grandeur and impeccable hospitality. At Smartz Hotels, we redefine luxury with a blend of modern elegance and timeless heritage.</p>
+        <div class="booking-section">
+            <input type="date" placeholder="Check-in">
+            <input type="date" placeholder="Check-out">
+            <button onclick="hrefFunction()">Book Now</button>
+			 <h2>Hotel Location</h2>
+    <div id="map"></div>
+
+    <script>
+        function initMap() {
+            const location = { lat: 48.8566, lng: 2.3522 }; // Paris, France
+
+            const map = new google.maps.Map(document.getElementById("map"), {
+                center: location,
+                zoom: 15,
+            });
+
+            new google.maps.Marker({
+                position: location,
+                map: map,
+                title: "Paris, France",
+            });
+        }
+    </script>
+
+    <!-- Google Maps API (Replace YOUR_API_KEY with an actual API key) -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap" async defer></script>
+		
+        </div>
+        
+        <div class="container">
+        <footer id="footer">
+        
+    <p style="color:white;">© 2024 Smartz Hotels. All Rights Reserved.</p>
+</footer>
+
+    </div>
+    <script>
+    function hrefFunction(){
+        windows.location.href = "loginjfs.jsp";
+    }
+        window.addEventListener('scroll', function() {
+            var navbar = document.getElementById('navbar');
+            if (window.scrollY > window.innerHeight) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });        
+        document.querySelector('a[href="#footer"]').addEventListener('click', function(event) {
+            event.preventDefault();
+            document.getElementById('footer').scrollIntoView({ behavior: 'smooth' });
+        });
+    </script>
+    
+</body>
+</html>

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Front Desk Management</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ccc;
+        }
+        th {
+            background-color: #5cb85c;
+            color: white;
+        }
+        button {
+            background-color: #5bc0de;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #31b0d5;
+        }
+        button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+        .invoice {
+            display: none;
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #e7f3fe;
+        }
+    </style>
+</head>
+<body>
+    <h1>Front Desk Management</h1>
+    <div class="container">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Guest Name</th>
+                    <th>Room Type</th>
+                    <th>Check-In</th>
+                    <th>Check-Out</th>
+                    <th>Room #</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="bookingTableBody"></tbody>
+        </table>
+        <div id="invoice" class="invoice"></div>
+    </div>
+    <script>
+        let bookings = [
+            { id: 1, guestName: 'John Doe', roomType: 'Single', checkInDate: '2023-10-01', checkOutDate: '2023-10-05', roomNumber: 101, status: 'Vacant' },
+            { id: 2, guestName: 'Jane Smith', roomType: 'Double', checkInDate: '2023-10-10', checkOutDate: '2023-10-15', roomNumber: 102, status: 'Occupied' },
+            { id: 3, guestName: 'Alice Johnson', roomType: 'Suite', checkInDate: '2023-10-20', checkOutDate: '2023-10-25', roomNumber: 103, status: 'Vacant' }
+        ];
+
+        function displayBookings() {
+            const tableBody = document.getElementById('bookingTableBody');
+            tableBody.innerHTML = '';
+            bookings.forEach(booking => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${booking.id}</td>
+                    <td>${booking.guestName}</td>
+                    <td>${booking.roomType}</td>
+                    <td>${booking.checkInDate}</td>
+                    <td>${booking.checkOutDate}</td>
+                    <td>${booking.roomNumber}</td>
+                    <td>${booking.status}</td>
+                    <td>
+                        <button onclick="checkIn(${booking.id})" ${booking.status === 'Occupied' ? 'disabled' : ''}>Check In</button>
+                        <button onclick="checkOut(${booking.id})" ${booking.status === 'Vacant' ? 'disabled' : ''}>Check Out</button>
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+
+        function checkIn(id) {
+            const booking = bookings.find(b => b.id === id);
+            if (booking) {
+                booking.status = 'Occupied';
+                alert(`${booking.guestName} has been checked in.`);
+                displayBookings();
+            }
+        }
+
+        function checkOut(id) {
+            const booking = bookings.find(b => b.id === id);
+            if (booking) {
+                booking.status = 'Vacant';
+                displayInvoice(booking);
+                displayBookings();
+            }
+        }
+
+        function displayInvoice(booking) {
+            const invoice = document.getElementById('invoice');
+            invoice.innerHTML = `
+                <h3>Invoice for ${booking.guestName}</h3>
+                <p><strong>Room Type:</strong> ${booking.roomType}</p>
+                <p><strong>Room Number:</strong> ${booking.roomNumber}</p>
+                <p><strong>Check-In Date:</strong> ${booking.checkInDate}</p>
+                <p><strong>Check-Out Date:</strong> ${booking.checkOutDate}</p>
+                <p><strong>Total Amount:</strong> $${calculateAmount(booking.roomType, booking.checkInDate, booking.checkOutDate)}</p>
+            `;
+            invoice.style.display = 'block';
+        }
+
+        function calculateAmount(roomType, checkInDate, checkOutDate) {
+            const rates = { 'Single': 100, 'Double': 150, 'Suite': 250 };
+            const checkIn = new Date(checkInDate);
+            const checkOut = new Date(checkOutDate);
+            const nights = (checkOut - checkIn) / (1000 * 60 * 60 * 24);
+            return rates[roomType] * nights;
+        }
+
+        displayBookings();
+    </script>
+</body>
+</html>

@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Housekeeping Dashboard - Taj Hotels</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f4f4f4;
+        }
+        .dashboard-container {
+            max-width: 900px;
+            margin: 50px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+        .profile {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 10px;
+            border-bottom: 2px solid #ddd;
+            margin-bottom: 20px;
+        }
+        .profile img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 2px solid #5cb85c;
+        }
+        .profile-info h3 {
+            margin: 0;
+            color: #555;
+        }
+        .profile-info p {
+            margin: 5px 0 0;
+            color: #777;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #5cb85c;
+            color: white;
+        }
+        .btn {
+            padding: 8px 12px;
+            background: #5bc0de;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .btn:hover {
+            background: #31b0d5;
+        }
+        .cleaned {
+            background: #5cb85c !important;
+        }
+        .logout-btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background: #d9534f;
+            color: white;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 5px;
+            text-decoration: none;
+            margin-top: 20px;
+            transition: background 0.3s;
+        }
+        .logout-btn:hover {
+            background: #c9302c;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="dashboard-container">
+        <h2>Housekeeping Dashboard</h2>
+
+        <!-- Profile Section -->
+        <div class="profile">
+            <img src="https://i.pravatar.cc/60" alt="Housekeeper Profile">
+            <div class="profile-info">
+                <h3>Alex Johnson</h3>
+                <p>Working Since: February 2022</p>
+            </div>
+        </div>
+
+        <!-- Rooms to be Cleaned -->
+        <h3>Rooms to be Cleaned</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Room No.</th>
+                    <th>Guest Name</th>
+                    <th>Last Cleaned</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="cleaningTable">
+                <!-- Dynamic Data -->
+            </tbody>
+        </table>
+
+        <!-- Service Requests -->
+        <h3>Room Service Requests</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Room No.</th>
+                    <th>Guest Name</th>
+                    <th>Request</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody id="serviceTable">
+                <!-- Dynamic Data -->
+            </tbody>
+        </table>
+
+        <!-- Logout Button -->
+        <a href="index.html" class="logout-btn" onclick="logout()">Logout</a>
+    </div>
+
+    <script>
+        let cleaningList = [
+            { room: 101, guest: 'John Doe', lastCleaned: 'Feb 10, 2025', status: 'Pending' },
+            { room: 202, guest: 'Emma Watson', lastCleaned: 'Feb 12, 2025', status: 'Pending' },
+            { room: 305, guest: 'Michael Brown', lastCleaned: 'Feb 14, 2025', status: 'Pending' }
+        ];
+
+        let serviceRequests = [
+            { room: 102, guest: 'Sophia Lee', request: 'Extra Towels', status: 'In Progress' },
+            { room: 204, guest: 'Daniel Wilson', request: 'Room Freshener', status: 'Pending' }
+        ];
+
+        function displayCleaningList() {
+            const tableBody = document.getElementById('cleaningTable');
+            tableBody.innerHTML = '';
+            cleaningList.forEach((room, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${room.room}</td>
+                    <td>${room.guest}</td>
+                    <td>${room.lastCleaned}</td>
+                    <td>${room.status}</td>
+                    <td>
+                        <button class="btn" onclick="markCleaned(${index})">Mark Cleaned</button>
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+        function logout() {
+        alert("You have been logged out.");
+        window.location.href = "introductionjfs.html"; // Redirect to the introduction page
+    }
+        function displayServiceRequests() {
+            const tableBody = document.getElementById('serviceTable');
+            tableBody.innerHTML = '';
+            serviceRequests.forEach(request => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${request.room}</td>
+                    <td>${request.guest}</td>
+                    <td>${request.request}</td>
+                    <td>${request.status}</td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+
+        function markCleaned(index) {
+            cleaningList[index].status = 'Cleaned';
+            alert(`Room ${cleaningList[index].room} has been cleaned.`);
+            displayCleaningList();
+        }
+
+        // Load Data on Page Load
+        displayCleaningList();
+        displayServiceRequests();
+    </script>
+
+</body>
+</html>
