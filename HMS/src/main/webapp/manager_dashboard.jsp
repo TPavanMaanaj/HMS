@@ -12,9 +12,10 @@
         response.sendRedirect("emplogin.jsp");
     }
 
-    String hotelName = (String) session1.getAttribute("hotelName");
+    String hotelName = (session1 !=null) ? (String) session1.getAttribute("Hotelname"):null;
     List<Employee> employeeList = (List<Employee>) request.getAttribute("employeeList");
-%>
+    %>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -114,19 +115,8 @@
 
     <div class="container">
         <h2>Booking & Room Availability</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Room Number</th>
-                    <th>Room Type</th>
-                    <th>Status</th>
-                </tr>
-            </thead>
-      
-      
-      
-      
-      
+       <table>
+           
         </table>
     </div>
 

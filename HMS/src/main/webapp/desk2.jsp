@@ -161,7 +161,7 @@
 <img src="https://cdn.sanity.io/images/ocl5w36p/prod3/50410f8db80276ed576801242b3c1af8b1e138f3-1281x1760.jpg?w=480&auto=format&dpr=2" alt="Destination 1">           
 	            <h3>Taj Hotel Faluknama, Hyderabad</h3>
 	            <p>Taj Falaknuma Palace, Hyderabad, stands as one of the world's most expansive private residences and palatial estates, bearing a historical legacy of unparalleled significance.</p>
-	            <a href="DestinationServlet?hotelName=Hyderabad" class="book-btn">Check Details</a>
+	            <a href="DestinationServlet?hotelName=Taj Hotel Faluknama, Hyderabad" class="book-btn">Check Details</a>
         </div>
 
         <div class="hotel-card">
